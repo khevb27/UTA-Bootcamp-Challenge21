@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useMutation } from "@apollo/client";
 import { Form, Button, Alert } from 'react-bootstrap';
-
+import { ADD_USER } from "../utils/mutations";
 import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
 
@@ -17,6 +18,8 @@ const SignupForm = () => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  const [addUser, { error }]= useMutation(ADD_USER);
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -28,15 +31,20 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await createUser(userFormData);
+      // const response = await createUser(userFormData);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      debugger;
+      const { data } = await addUser({
+        variables: { ...userFormData },
+      });
 
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
+      // if (!response.ok) {
+      //   throw new Error('something went wrong!');
+      // }
+
+      // const { token, user } = await response.json();
+      // console.log(user);
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -55,7 +63,7 @@ const SignupForm = () => {
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          Something went wrong with your signup!
+          {error && <div>Sign up failed</div>}
         </Alert>
 
         <Form.Group>
@@ -103,6 +111,7 @@ const SignupForm = () => {
           Submit
         </Button>
       </Form>
+      {error && <div>Sign up failed</div>}
     </>
   );
 };
