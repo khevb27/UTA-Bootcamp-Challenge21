@@ -53,9 +53,6 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Built Using](#built-using)
-- [Preview](#preview)
 - [Links](#links)
 - [License](#license)
 
@@ -63,7 +60,7 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 
 ## Links
 
-- GitHub Repository Link: 
+- GitHub Repository Link: https://github.com/khevb27/UTA-Bootcamp-Challenge21
 
 ----------------------------------------------------------------------
 ## License
